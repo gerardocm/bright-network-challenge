@@ -1,0 +1,21 @@
+{
+  "name": "bright-network-challenge",
+  "version": "1.0.0",
+  "description": "Bright Network technical challenge",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc src/index.ts --outDir ./dist",
+    "watch": "npx tsc src/index.ts --watch --outDir ./dist",
+    "main": "node dist/index.js",
+    "test": "jest"
+  },
+  "author": "Gerardo Cisneros Mendoza",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
