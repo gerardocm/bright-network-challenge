@@ -80,23 +80,24 @@ Having flexibility will help us to provide the best recommendation in cases such
 The flexibility provided by this part of the algorithm covers cases when the job title has more than one word. e.g. `bio: "I worked as Engineer"` -> `job title: "Mechanical Engineer"`.
 - **Handling location context.**  Based on the data set provided, a member's bio can include the context of location preferences about where the member might be looking for a job. 
 In order to give the best recommendation is important to account for this information, and I have included a check for context on words before a location found in a member's bio. This check consists of looking _K_ neighbours before the location is found, being K an adjustable number, set to 2 for this algorithm. Each k-neighbor will be compared against a set of predefined words that provide either a positive or negative context to a location, affecting the score of each potential job.
-<br>
-Some examples of location context check cases are:
-`bio: "outside of London"` -> will score London jobs lower
-`bio: "living London"` -> will score London jobs higher
-`bio: "london"` -> will give a neutral score
-<br>
-The scores of each one of the cases have been included in the constants file and can be fine-tuned by analyzing a larger data set. Currently, the values are:
-- Positive context location score = 1.5
-- Neutral context location score = 1
-- Negative context location score = -1.5
-- No location found in bio = 0
-Is worth mentioning that locations are compared with exact matches and only accept single-word locations. 
+  Some examples of location context check cases are:
+  - `bio: "outside of London", job.location: "London"` -> will score London jobs lower
+  - `bio: "relocate to London", job.location: "London"` -> will score London jobs higher
+  - `bio: "London", job.location: "London"` -> will give a neutral score
+
+  The scores of each one of the cases have been included in the constants file and can be fine-tuned by analyzing a larger data set. 
+  Currently, the values are:
+  - Positive context location score = 1.5
+  - Neutral context location score = 1
+  - Negative context location score = -1.5
+  - No location found in bio = 0
+
+  Is worth mentioning that locations are compared with exact matches and only accept single-word locations. 
 
 The algorithm performance is improved significantly by normalizing the text. Assuming that the data from the jobs is structured, the only transformation required is to lowercase. For a member's bio, the normalization has the following steps:
 - Removes any punctuation character or number from the text.
 - Converts the text to lowercase.
-- Filters the words and removes common words to reduce the text and focus on important words. For example, removes `"the", "a", "and", "you"...` 
+- Filters the words and removes common words to reduce the text and focus on important words. For example, remove `"the", "a", "and", "you"...`. _The words included in the constant `STOP_WORDS` are sourced from a free list of common stop words._
 
 
 ### Additional notes and comments about the algorithm:
@@ -104,7 +105,7 @@ The algorithm performance is improved significantly by normalizing the text. Ass
 - The constant values used to score the jobs are based on the analysis of data and can be adjusted accordingly.
 - If there is no word matching in any of the jobs (score = 0), the recommended job is `null`
 - If two jobs have the same score, it returns the first one found.
-- Some data in the constant are sets due to their uniqueness and efficiency to check for if it exists in the set.
+- Some data in the constant are sets due to their uniqueness and efficiency to check for if it exist in the set.
 - The fetching of data was implemented with the javascipt `fetch` function to keep the code simple without the need of any packages.
 
 ### Areas of improvement and considerations
